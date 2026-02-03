@@ -1,0 +1,16 @@
+# Logic constraints for the Sanity Check experiment
+# Format: Simple assertions about relations
+# These will be used to reward the graph structure
+
+rules:
+  # Rule: A numerical progression implies a successor relation
+  - rule_name: "linear_progression"
+    condition: "is_numeric_sequence"
+    required_relation: "next_step"
+    nodes: ["1", "2", "3", "4", "5"] # Simplified for the specific experiment
+
+  # Rule: Disjoint concepts (sanity check)
+  # If we were modeling objects, we might say:
+  # - rule_name: "distinct_objects"
+  #   condition: "different_class"
+  #   forbidden_relation: "is_same_as"
