@@ -1,4 +1,5 @@
 import torch
+import torch.nn as nn
 
 class Node:
     """
@@ -10,13 +11,21 @@ class Node:
         self.embedding = embedding # Tensor (e.g., from the CSP layer)
         self.children = children if children else [] # List of Node IDs if this is a hyperedge
 
-class RecursiveHypergraph:
+class RecursiveHypergraph(nn.Module):
     """
-    Manages the graph topology.
+    Manages the graph topology and acts as the Logic Core neural network.
     """
-    def __init__(self):
+    def __init__(self, node_dim=64):
+        super().__init__()
         self.nodes = {} # id -> Node
         self.next_id = 0
+        self.node_dim = node_dim
+        # Simple processing layer to act as the "Brain" for now
+        self.process = nn.Linear(node_dim, node_dim)
+
+    def forward(self, x):
+        # x: (Batch, Node_Dim)
+        return self.process(x)
         
     def add_node(self, embedding=None):
         """Create an atomic node with a semantic embedding."""
